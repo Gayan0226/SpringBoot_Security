@@ -9,4 +9,6 @@ public interface AdminService {
     Admin saveAdmin(AdminRequestDto adminRequestDto);
 
     List<Admin> getAll();
+
+    String isVerify(AdminRequestDto adminRequestDto);
 }

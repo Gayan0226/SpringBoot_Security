@@ -20,9 +20,13 @@ public class AdminController {
         this.service = service;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Admin> savedAdmin(@RequestBody AdminRequestDto adminRequestDto){
         return new ResponseEntity<Admin>(service.saveAdmin(adminRequestDto), HttpStatus.CREATED);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody AdminRequestDto adminRequestDto){
+        return new ResponseEntity<String>(service.isVerify(adminRequestDto), HttpStatus.OK);
     }
     @GetMapping
     public ResponseEntity<List<Admin>> getAllAdmin(){
