@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request ->
                         request.requestMatchers(HttpMethod.GET,"admin")
                                 .permitAll()
-                                .requestMatchers(HttpMethod.POST,"admin/login","admin/create")
+                                .requestMatchers(HttpMethod.POST,"admin/login")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
