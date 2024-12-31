@@ -4,6 +4,7 @@ import com.springboot.security.dto.AdminRequestDto;
 import com.springboot.security.model.Admin;
 import com.springboot.security.repo.AdminRepository;
 import com.springboot.security.service.AdminService;
+import com.springboot.security.service.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,10 +20,12 @@ public class AdminServiceImpl implements AdminService {
     private final AdminRepository repository;
     private final AuthenticationManager authenticationManager;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
-
-    public AdminServiceImpl(AdminRepository repository, AuthenticationManager authenticationManager) {
+// Jwt Service For Get The Generate Valid Token To Send
+    private final JwtService jwtService;
+    public AdminServiceImpl(AdminRepository repository, AuthenticationManager authenticationManager, JwtService jwtService) {
         this.repository = repository;
         this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -44,7 +47,7 @@ public class AdminServiceImpl implements AdminService {
                                 adminRequestDto.getUser(), adminRequestDto.getPassword()
                         ));
         if(authentication.isAuthenticated()){
-            return  "Successful";
+            return  jwtService.generateToken(adminRequestDto.getUser());
         }
         return "Error Not Valid !";
     }
