@@ -37,6 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
             token = authHeader.substring(7);
             userName = jwtService.extractUserName(token);
         }
+        //check the Context Are null mean is previous Not Authenticate
         if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = context.getBean(AdminDetailsService.class).loadUserByUsername(userName);
             if (jwtService.validateToken(token, userDetails)) {
